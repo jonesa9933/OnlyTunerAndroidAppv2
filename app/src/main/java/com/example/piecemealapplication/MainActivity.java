@@ -1,10 +1,12 @@
 package com.example.piecemealapplication;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -19,7 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.HorizontalScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.ContextCompat;
@@ -36,8 +37,17 @@ public class MainActivity extends AppCompatActivity {
     HorizontalScrollView noteLayout;
     TextView currentHz, targetHz, targetNote;
     DecimalFormat df2;
+    boolean stopThread = false;
 
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    runPitchAnalyzer();
+                } else {
+                    showAlertDialog();
+                }
 
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,31 +60,64 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
 
-        //create the launcher that will handle the response for a permission request
-        ActivityResultLauncher<String> requestPermissionLauncher =
-                registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                    if (!isGranted)
-                        Toast.makeText(getApplicationContext(), "Need to accept permission for app to work correctly.", Toast.LENGTH_SHORT).show();
-                    else {
-                        realOnCreate();
-                    }
-                });
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopThread = true;
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        stopThread = false;
+        this.checkPermission();
+    }
+
+    private void checkPermission(){
         //check if permission is already obtained
-        if (ContextCompat.checkSelfPermission(
-                this, "android.permission.RECORD_AUDIO") ==
-                PackageManager.PERMISSION_GRANTED) {
-            realOnCreate();
-        } else { //ask the user to grant permission
-            // You can directly ask for the permission.
-            // The registered ActivityResultCallback gets the result of this request.
-            requestPermissionLauncher.launch("android.permission.RECORD_AUDIO");
+        if (ContextCompat.checkSelfPermission(this, "android.permission.RECORD_AUDIO") == PackageManager.PERMISSION_GRANTED) {
+            runPitchAnalyzer();
+        } else if (shouldShowRequestPermissionRationale("android.permission.RECORD_AUDIO")) {
+            showAlertDialog();
+        } else {
+            makePermissionRequest();
         }
     }
 
+    // Called if shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) is not true
+// or if the yes button is pressed in the alert dialog.
+    public void makePermissionRequest() {
+        requestPermissionLauncher.launch("android.permission.RECORD_AUDIO");
+    }
+
+    // is called if the permission is not given.
+    public void showAlertDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("This app requires the permission to RECORD AUDIO.\n\n If you do not see a prompt after proceeding, you will need to change the app permissions in your phone settings.");
+                alertDialogBuilder.setPositiveButton("Proceed to Allow",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                makePermissionRequest();
+                            }
+                        });
+
+        alertDialogBuilder.setNegativeButton("Do Not Proceed", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+    }
+
     @SuppressLint("ClickableViewAccessibility")
-    public void realOnCreate() {
+    public void runPitchAnalyzer() {
         //get local resources from xml into memory
         final String[] tuningValues = getResources().getStringArray(R.array.tuningVals);
         String[] tuningNames = getResources().getStringArray(R.array.tunings);
@@ -97,9 +140,12 @@ public class MainActivity extends AppCompatActivity {
         AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(22050, 1024, 0);
         dispatcher.addAudioProcessor(new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, 22050.0f, 1024, new PitchDetectionHandler() {
             public void handlePitch(PitchDetectionResult pitchDetectionResult, AudioEvent audioEvent) {
-                final double doublePitch = (double)pitchDetectionResult.getPitch();
+                final double doublePitch = pitchDetectionResult.getPitch();
                 MainActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
+                        if(stopThread)
+                            return;
+
                         if (doublePitch != -1.0d) {
                             lastNotes.add(doublePitch);
                             double lastNotesAvg = getLastNotesAvg();
