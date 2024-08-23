@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tuningVals">
+        <item>E A D G B E</item>
+        <item>D A D G B E</item>
+        <item>E♭ A♭ D♭ G♭ B♭ E♭</item>
+        <item>D♭ A♭ D♭ G♭ B♭ E♭</item>
+        <item>D G C F A D</item>
+        <item>D G D G B D</item>
+    </string-array>
+    <string-array name="tunings">
+        <item>E Standard</item>
+        <item>Drop D</item>
+        <item>E♭ Standard</item>
+        <item>Drop D♭</item>
+        <item>D Standard</item>
+        <item>Open G</item>
+    </string-array>
+</resources>
