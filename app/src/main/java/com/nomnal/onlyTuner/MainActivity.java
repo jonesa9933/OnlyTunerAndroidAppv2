@@ -1,4 +1,4 @@
-package com.example.piecemealapplication;
+package com.nomnal.onlyTuner;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -21,9 +21,11 @@ import android.widget.ArrayAdapter;
 import android.widget.HorizontalScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.ContextCompat;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         this.checkPermission();
     }
 
-    private void checkPermission(){
+    private void checkPermission() {
         //check if permission is already obtained
         if (ContextCompat.checkSelfPermission(this, "android.permission.RECORD_AUDIO") == PackageManager.PERMISSION_GRANTED) {
             runPitchAnalyzer();
@@ -96,13 +98,13 @@ public class MainActivity extends AppCompatActivity {
     public void showAlertDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("This app requires the permission to RECORD AUDIO.\n\n If you do not see a prompt after proceeding, you will need to change the app permissions in your phone settings.");
-                alertDialogBuilder.setPositiveButton("Proceed to Allow",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                makePermissionRequest();
-                            }
-                        });
+        alertDialogBuilder.setPositiveButton("Proceed to Allow",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        makePermissionRequest();
+                    }
+                });
 
         alertDialogBuilder.setNegativeButton("Do Not Proceed", new DialogInterface.OnClickListener() {
             @Override
@@ -143,41 +145,40 @@ public class MainActivity extends AppCompatActivity {
                 final double doublePitch = pitchDetectionResult.getPitch();
                 MainActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
-                        if(stopThread)
+                        if (stopThread)
                             return;
 
                         if (doublePitch != -1.0d) {
                             lastNotes.add(doublePitch);
                             double lastNotesAvg = getLastNotesAvg();
 
-                            if(checkNotesWithinAverage(1)){
+                            if (checkNotesWithinAverage(1)) {
                                 MainActivity.this.scrollToNote(lastNotesAvg);
                             }
 
-                            if(lastNotes.size() >= 4) {
+                            if (lastNotes.size() >= 4) {
                                 lastNotes.remove();
                             }
                         }
                     }
 
-                    public boolean checkNotesWithinAverage(double range){
-                        for(Double pitch: lastNotes){
-                            if(Math.abs(getLastNotesAvg()-pitch) > range)
-                            {
+                    public boolean checkNotesWithinAverage(double range) {
+                        for (Double pitch : lastNotes) {
+                            if (Math.abs(getLastNotesAvg() - pitch) > range) {
                                 return false;
                             }
                         }
                         return true;
                     }
 
-                    public double getLastNotesAvg(){
+                    public double getLastNotesAvg() {
                         int count = 0;
                         double avg = 0.0d;
-                        for(Double pitch: lastNotes){
-                            avg+=pitch;
+                        for (Double pitch : lastNotes) {
+                            avg += pitch;
                             count++;
                         }
-                        return avg/count;
+                        return avg / count;
                     }
                 });
             }

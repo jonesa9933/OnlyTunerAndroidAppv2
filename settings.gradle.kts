@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Piecemeal application"
+rootProject.name = "OnlyTuner"
 include(":app")
  

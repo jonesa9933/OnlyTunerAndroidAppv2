@@ -1,4 +1,4 @@
-package com.example.piecemealapplication;
+package com.nomnal.onlyTuner;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.piecemealapplication", appContext.getPackageName());
+        assertEquals("com.nomnal.OnlyTunerAndroidAppv2", appContext.getPackageName());
     }
 }

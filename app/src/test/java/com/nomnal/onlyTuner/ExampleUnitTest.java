@@ -1,4 +1,4 @@
-package com.example.piecemealapplication;
+package com.nomnal.onlyTuner;
 
 import org.junit.Test;
 

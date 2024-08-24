@@ -1,86 +1,422 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/main"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MainActivity"
-    xmlns:tools="http://schemas.android.com/tools">
-    <androidx.appcompat.widget.AppCompatSpinner android:gravity="center" android:id="@id/spinner" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:layout_marginTop="50.0dip" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
-    <com.google.android.material.textview.MaterialTextView android:gravity="center" android:id="@id/tuning" android:padding="16.0dip" android:layout_width="0.0dip" android:layout_height="112.0dip" android:text="E A D G B E" android:lines="1" android:autoSizeTextType="uniform" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toBottomOf="@id/spinner" />
-    <View android:background="@color/line" android:layout_width="2.0dip" android:layout_height="210.0dip" android:layout_marginTop="55.0dip" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
-    <HorizontalScrollView android:id="@id/notes" android:scrollbars="none" android:layout_width="0.0dip" android:layout_height="wrap_content" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent">
-        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="200.0dip" android:layout_height="fill_parent">
-                <com.google.android.material.textview.MaterialTextView android:textSize="150.0sp" android:gravity="center" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="A" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+    android:background="@color/black"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20.0dip"
+        android:layout_marginTop="48dp"
+        android:background="@color/black"
+        android:gravity="center"
+        android:popupBackground="@color/black"
+        app:layout_constraintHorizontal_bias="0.467"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@id/tuning"
+        android:layout_width="0.0dip"
+        android:layout_height="112.0dip"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
+        android:lines="1"
+        android:padding="16.0dip"
+        android:text="E A D G B E"
+        android:textColor="@color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinner" />
+
+    <View
+        android:layout_width="2.0dip"
+        android:layout_height="210.0dip"
+        android:layout_marginTop="55.0dip"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <HorizontalScrollView
+        android:id="@id/notes"
+        android:layout_width="0.0dip"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="200.0dip"
+                android:layout_height="fill_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="A"
+                    android:textColor="@color/white"
+                    android:textSize="150.0sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <include layout="@layout/line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="200.0dip" android:layout_height="fill_parent">
-                <com.google.android.material.textview.MaterialTextView android:textSize="150.0sp" android:gravity="center" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="B♭" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="200.0dip"
+                android:layout_height="fill_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="B♭"
+                    android:textSize="150.0sp"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <include layout="@layout/line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="200.0dip" android:layout_height="fill_parent">
-                <com.google.android.material.textview.MaterialTextView android:textSize="150.0sp" android:gravity="center" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="B" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="200.0dip"
+                android:layout_height="fill_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="B"
+                    android:textSize="150.0sp"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <include layout="@layout/line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="200.0dip" android:layout_height="fill_parent">
-                <com.google.android.material.textview.MaterialTextView android:textSize="150.0sp" android:gravity="center" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="C" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="200.0dip"
+                android:layout_height="fill_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="C"
+                    android:textSize="150.0sp"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <include layout="@layout/line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="200.0dip" android:layout_height="fill_parent">
-                <com.google.android.material.textview.MaterialTextView android:textSize="150.0sp" android:gravity="center" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="D♭" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="200.0dip"
+                android:layout_height="fill_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="D♭"
+                    android:textSize="150.0sp"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <include layout="@layout/line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="200.0dip" android:layout_height="fill_parent">
-                <com.google.android.material.textview.MaterialTextView android:textSize="150.0sp" android:gravity="center" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="D" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="200.0dip"
+                android:layout_height="fill_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="D"
+                    android:textSize="150.0sp"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <include layout="@layout/line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="200.0dip" android:layout_height="fill_parent">
-                <com.google.android.material.textview.MaterialTextView android:textSize="150.0sp" android:gravity="center" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="E♭" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="200.0dip"
+                android:layout_height="fill_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="E♭"
+                    android:textColor="@color/white"
+                    android:textSize="150.0sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <include layout="@layout/line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="200.0dip" android:layout_height="fill_parent">
-                <com.google.android.material.textview.MaterialTextView android:textSize="150.0sp" android:gravity="center" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="E" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="200.0dip"
+                android:layout_height="fill_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="E"
+                    android:textColor="@color/white"
+                    android:textSize="150.0sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <include layout="@layout/line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="200.0dip" android:layout_height="fill_parent">
-                <com.google.android.material.textview.MaterialTextView android:textSize="150.0sp" android:gravity="center" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="F" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="200.0dip"
+                android:layout_height="fill_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="F"
+                    android:textColor="@color/white"
+                    android:textSize="150.0sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <include layout="@layout/line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="200.0dip" android:layout_height="fill_parent">
-                <com.google.android.material.textview.MaterialTextView android:textSize="150.0sp" android:gravity="center" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="G♭" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="200.0dip"
+                android:layout_height="fill_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="G♭"
+                    android:textColor="@color/white"
+                    android:textSize="150.0sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <include layout="@layout/line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="200.0dip" android:layout_height="fill_parent">
-                <com.google.android.material.textview.MaterialTextView android:textSize="150.0sp" android:gravity="center" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="G" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="200.0dip"
+                android:layout_height="fill_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="G"
+                    android:textColor="@color/white"
+                    android:textSize="150.0sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <include layout="@layout/line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="200.0dip" android:layout_height="fill_parent">
-                <com.google.android.material.textview.MaterialTextView android:textSize="150.0sp" android:gravity="center" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="A♭" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="200.0dip"
+                android:layout_height="fill_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="A♭"
+                    android:textColor="@color/white"
+                    android:textSize="150.0sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <include layout="@layout/line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="200.0dip" android:layout_height="fill_parent">
-                <com.google.android.material.textview.MaterialTextView android:textSize="150.0sp" android:gravity="center" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="A" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="200.0dip"
+                android:layout_height="fill_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="A"
+                    android:textColor="@color/white"
+                    android:textSize="150.0sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <include layout="@layout/line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="200.0dip" android:layout_height="fill_parent">
-                <com.google.android.material.textview.MaterialTextView android:textSize="150.0sp" android:gravity="center" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="B♭" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="200.0dip"
+                android:layout_height="fill_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="B♭"
+                    android:textColor="@color/white"
+                    android:textSize="150.0sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <include layout="@layout/line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="200.0dip" android:layout_height="fill_parent">
-                <com.google.android.material.textview.MaterialTextView android:textSize="150.0sp" android:gravity="center" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="B" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="200.0dip"
+                android:layout_height="fill_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="B"
+                    android:textColor="@color/white"
+                    android:textSize="150.0sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <include layout="@layout/line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="200.0dip" android:layout_height="fill_parent">
-                <com.google.android.material.textview.MaterialTextView android:textSize="150.0sp" android:gravity="center" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="C" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="200.0dip"
+                android:layout_height="fill_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="C"
+                    android:textColor="@color/white"
+                    android:textSize="150.0sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <include layout="@layout/line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="200.0dip" android:layout_height="fill_parent">
-                <com.google.android.material.textview.MaterialTextView android:textSize="150.0sp" android:gravity="center" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="D♭" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="200.0dip"
+                android:layout_height="fill_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="D♭"
+                    android:textColor="@color/white"
+                    android:textSize="150.0sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <include layout="@layout/line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="200.0dip" android:layout_height="fill_parent">
-                <com.google.android.material.textview.MaterialTextView android:textSize="150.0sp" android:gravity="center" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="D" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="200.0dip"
+                android:layout_height="fill_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="D"
+                    android:textColor="@color/white"
+                    android:textSize="150.0sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <include layout="@layout/line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
@@ -103,6 +439,7 @@
             android:gravity="center"
             android:text="82.41 Hz"
             android:textSize="56.0sp"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/targetNote"
@@ -126,6 +463,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="Target:"
+            android:textColor="@color/white"
             android:textSize="36.0sp" />
 
         <LinearLayout
@@ -142,6 +480,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="82.41 Hz"
+                android:textColor="@color/white"
                 android:textSize="28.0sp" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -151,6 +490,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="E"
+                android:textColor="@color/white"
                 android:textSize="28.0sp" />
         </LinearLayout>
     </LinearLayout>

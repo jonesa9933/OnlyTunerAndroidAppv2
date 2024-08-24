@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.piecemealapplication"
-    compileSdk = 34
+    namespace = "com.nomnal.onlyTuner"
+    compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.piecemealapplication"
+        applicationId = "com.nomnal.onlyTuner"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -37,7 +37,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    implementation(files("libs\\TarsosDSP-latest.jar"))
+    implementation(files("libs/TarsosDSP-latest.jar"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
