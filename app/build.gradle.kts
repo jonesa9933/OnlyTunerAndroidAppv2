@@ -4,14 +4,14 @@ plugins {
 
 android {
     namespace = "com.nomnal.onlyTuner"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.nomnal.onlyTuner"
         minSdk = 24
-        targetSdk = 35
-        versionCode = 6
-        versionName = "1.2"
+        targetSdk = 36
+        versionCode = 9
+        versionName = "1.3.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "${applicationId}-${versionName}-${versionCode}")

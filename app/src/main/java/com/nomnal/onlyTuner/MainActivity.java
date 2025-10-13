@@ -90,12 +90,12 @@ public class MainActivity extends AppCompatActivity {
 
     // Called if shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) is not true
 // or if the yes button is pressed in the alert dialog.
-    public void makePermissionRequest() {
+    private void makePermissionRequest() {
         requestPermissionLauncher.launch("android.permission.RECORD_AUDIO");
     }
 
     // is called if the permission is not given.
-    public void showAlertDialog() {
+    private void showAlertDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("This app requires the permission to RECORD AUDIO.\n\n If you do not see a prompt after proceeding, you will need to change the app permissions in your phone settings.");
         alertDialogBuilder.setPositiveButton("Proceed to Allow",
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    public void runPitchAnalyzer() {
+    private void runPitchAnalyzer() {
         //get local resources from xml into memory
         final String[] tuningValues = getResources().getStringArray(R.array.tuningVals);
         String[] tuningNames = getResources().getStringArray(R.array.tunings);
@@ -137,53 +137,10 @@ public class MainActivity extends AppCompatActivity {
         df2 = new DecimalFormat();
         df2.setMaximumFractionDigits(2);
         df2.setMinimumFractionDigits(2);
-        Queue<Double> lastNotes = new LinkedList<>();
+        AudioDispatcher dispatcher = null;
+        int bufferSize = 64;
 
-        AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(22050, 1024, 0);
-        dispatcher.addAudioProcessor(new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, 22050.0f, 1024, new PitchDetectionHandler() {
-            public void handlePitch(PitchDetectionResult pitchDetectionResult, AudioEvent audioEvent) {
-                final double doublePitch = pitchDetectionResult.getPitch();
-                MainActivity.this.runOnUiThread(new Runnable() {
-                    public void run() {
-                        if (stopThread)
-                            return;
-
-                        if (doublePitch != -1.0d) {
-                            lastNotes.add(doublePitch);
-                            double lastNotesAvg = getLastNotesAvg();
-
-                            if (checkNotesWithinAverage(1)) {
-                                MainActivity.this.scrollToNote(lastNotesAvg);
-                            }
-
-                            if (lastNotes.size() >= 4) {
-                                lastNotes.remove();
-                            }
-                        }
-                    }
-
-                    public boolean checkNotesWithinAverage(double range) {
-                        for (Double pitch : lastNotes) {
-                            if (Math.abs(getLastNotesAvg() - pitch) > range) {
-                                return false;
-                            }
-                        }
-                        return true;
-                    }
-
-                    public double getLastNotesAvg() {
-                        int count = 0;
-                        double avg = 0.0d;
-                        for (Double pitch : lastNotes) {
-                            avg += pitch;
-                            count++;
-                        }
-                        return avg / count;
-                    }
-                });
-            }
-        }));
-        new Thread(dispatcher, "Audio Thread").start();
+        startAudioDispatcher(dispatcher,bufferSize);
 
         currentHz = findViewById(R.id.currentHz);
         targetHz = findViewById(R.id.targetHz);
@@ -206,7 +163,64 @@ public class MainActivity extends AppCompatActivity {
         spinner.setAdapter(new ArrayAdapter<>(this, R.layout.spinner_item, tuningNames));
     }
 
-    public void scrollToNote(double hz) {
+    private void startAudioDispatcher(AudioDispatcher dispatcher, int bufferSize){
+        try{
+            Queue<Double> lastNotes = new LinkedList<>();
+
+            dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(22050, bufferSize, 0);
+
+            dispatcher.addAudioProcessor(new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, 22050.0f, bufferSize, new PitchDetectionHandler() {
+                public void handlePitch(PitchDetectionResult pitchDetectionResult, AudioEvent audioEvent) {
+                    final double doublePitch = pitchDetectionResult.getPitch();
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        public void run() {
+                            if (stopThread)
+                                return;
+
+                            if (doublePitch != -1.0d) {
+                                lastNotes.add(doublePitch);
+                                double lastNotesAvg = getLastNotesAvg();
+
+                                if (checkNotesWithinAverage(1)) {
+                                    MainActivity.this.scrollToNote(lastNotesAvg);
+                                }
+
+                                if (lastNotes.size() >= 4) {
+                                    lastNotes.remove();
+                                }
+                            }
+                        }
+
+                        public boolean checkNotesWithinAverage(double range) {
+                            for (Double pitch : lastNotes) {
+                                if (Math.abs(getLastNotesAvg() - pitch) > range) {
+                                    return false;
+                                }
+                            }
+                            return true;
+                        }
+
+                        public double getLastNotesAvg() {
+                            int count = 0;
+                            double avg = 0.0d;
+                            for (Double pitch : lastNotes) {
+                                avg += pitch;
+                                count++;
+                            }
+                            return avg / count;
+                        }
+                    });
+                }
+            }));
+            new Thread(dispatcher, "Audio Thread").start();
+        }
+        catch(Exception ex) {
+            bufferSize *=2;
+            startAudioDispatcher(dispatcher,bufferSize);
+        }
+    }
+
+    private void scrollToNote(double hz) {
         //set current hz
         currentHz.setText(df2.format(hz) + " Hz");
 
@@ -225,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
         noteLayout.smoothScrollTo(px - offset, 0);
     }
 
-    public void setCurrentHzValues(double notesAway) {
+    private void setCurrentHzValues(double notesAway) {
         double betweenNotesAway = notesAway - ((int) notesAway);
 
         //set the target notes int
