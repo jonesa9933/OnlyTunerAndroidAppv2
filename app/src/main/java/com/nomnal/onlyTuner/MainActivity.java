@@ -221,22 +221,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void scrollToNote(double hz) {
-        //set current hz
-        currentHz.setText(df2.format(hz) + " Hz");
+        String currentHzString = currentHz.getText().toString();
 
-        //calculate where to scroll to
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int offset = displayMetrics.widthPixels / 2;
+        boolean shouldScroll = Math.abs(Double.parseDouble(currentHzString.substring(0,currentHz.length()-3)) - hz) >= .05;
 
-        double notesAway = 12 * (Math.log(hz / 16.35) / Math.log(2));
+        if(shouldScroll){
+            //set current hz
+            currentHz.setText(df2.format(hz) + " Hz");
 
-        setCurrentHzValues(notesAway);
+            //calculate where to scroll to
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            int offset = displayMetrics.widthPixels / 2;
 
-        //dp = dp from C0 + dp of a letter * notesAway in one octave
-        double dp = 700 + 200 * (notesAway % 12);
-        int px = (int) (dp * displayMetrics.density);
-        noteLayout.smoothScrollTo(px - offset, 0);
+            double notesAway = 12 * (Math.log(hz / 16.35) / Math.log(2));
+
+            setCurrentHzValues(notesAway);
+
+            //dp = dp from C0 + dp of a letter * notesAway in one octave
+            double dp = 700 + 200 * (notesAway % 12);
+            int px = (int) (dp * displayMetrics.density);
+            noteLayout.smoothScrollTo(px - offset, 0);
+        }
     }
 
     private void setCurrentHzValues(double notesAway) {
@@ -255,9 +261,6 @@ public class MainActivity extends AppCompatActivity {
         //find target Note based on target int
         String targetHzString;
         switch (targetNoteInt % 12) {
-            default:
-                targetHzString = "E";
-                break;
             case 0:
                 targetHzString = "C";
                 break;
@@ -293,6 +296,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 11:
                 targetHzString = "B";
+                break;
+            default:
+                targetHzString = "E";
                 break;
         }
 
